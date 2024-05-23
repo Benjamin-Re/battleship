@@ -1,9 +1,10 @@
 import Ship from '../logicalComponents/ship.js'
 import { player1Gameboard, player2Gameboard } from '../main.js'
+import { computerTurn } from './enterCoordinatesComponent.js'
 
 export const gamestate = { 
     gameover: false,
-    turn: 0
+    turn: true
  }
 
 export function createVisualGameboard(name) {
@@ -47,6 +48,7 @@ function onClick(e) {
     if(e.target.parentNode.id==='gameboard2'){
         clickOnCoordinate(coordinates[0],coordinates[1],player2Gameboard, 'gameboard2')
     }
+    computerTurn()
 }
 
 export function clickOnCoordinate(row, col, gameboard, gameboardId) {
@@ -61,7 +63,7 @@ export function clickOnCoordinate(row, col, gameboard, gameboardId) {
         alert(`All ships of ${gameboardId} are sunk`)
         gamestate.gameover = true
     }
-    gamestate.turn = 0
+    gamestate.turn = !gamestate.turn
 }
 
 export function repaintGameboards() {

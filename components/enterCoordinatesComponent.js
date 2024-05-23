@@ -91,9 +91,19 @@ function submitCoordinates() {
     repaintGameboards()
 }
 
-function startComputerGame() {    
-    const randomRow = Math.floor(Math.random() * (4 + 1))
-    const randomCol = Math.floor(Math.random() * (4 + 1))
-    clickOnCoordinate(randomRow, randomCol, player1Gameboard, 'gameboard1')
+export function computerTurn() {
+    if(!gamestate.gameover && !gamestate.turn){
+        const randomRow = Math.floor(Math.random() * (4 + 1))
+        const randomCol = Math.floor(Math.random() * (4 + 1))
+        clickOnCoordinate(randomRow, randomCol, player1Gameboard, 'gameboard1')
+    }
+}
+
+function startComputerGame() {  
+    console.log(`Gamestate gameover: ${gamestate.gameover}, gamestate turn: ${gamestate.turn}`)  
+    
+    computerTurn()
+    
+    
 }
 
