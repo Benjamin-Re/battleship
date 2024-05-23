@@ -1,5 +1,7 @@
 import { player1Gameboard, player2Gameboard } from "../main.js"
 import { repaintGameboards } from "./gameboardComponent.js"
+import { gamestate } from './gameboardComponent.js'
+import {clickOnCoordinate } from './gameboardComponent.js'
 
 export function createCoordinateForm() {
     const app = document.querySelector('.app')
@@ -32,10 +34,15 @@ export function createCoordinateForm() {
     randomizeButton.textContent = 'randomize'
     randomizeButton.addEventListener('click', randomlyDistributeShips)
     formContainer.append(randomizeButton)
+    const startComputerGameButton = document.createElement('button')
+    startComputerGameButton.textContent = 'Start Computer Game'
+    startComputerGameButton.addEventListener('click', startComputerGame)
+    formContainer.append(startComputerGameButton)
     app.append(formContainer)
 }
 
 function randomlyDistributeShips() {
+    repaintGameboards()
     let numShipsPlayer1 = 0
     while(numShipsPlayer1 < 3) {
         const randomStartRow = Math.floor(Math.random() * (4 + 1))
@@ -44,6 +51,16 @@ function randomlyDistributeShips() {
         const randomEndCol = Math.floor(Math.random() * (4 + 1))       
         if(player1Gameboard.placeShip(randomStartRow,randomStartCol,randomEndRow,randomEndCol)){
             numShipsPlayer1++
+        }
+    }
+    let numShipsPlayer2 = 0
+    while(numShipsPlayer2 < 3) {
+        const randomStartRow = Math.floor(Math.random() * (4 + 1))
+        const randomStartCol = Math.floor(Math.random() * (4 + 1))
+        const randomEndRow = Math.floor(Math.random() * (4 + 1))
+        const randomEndCol = Math.floor(Math.random() * (4 + 1))       
+        if(player2Gameboard.placeShip(randomStartRow,randomStartCol,randomEndRow,randomEndCol)){
+            numShipsPlayer2++
         }
     }
 }
@@ -73,3 +90,10 @@ function submitCoordinates() {
     }
     repaintGameboards()
 }
+
+function startComputerGame() {    
+    const randomRow = Math.floor(Math.random() * (4 + 1))
+    const randomCol = Math.floor(Math.random() * (4 + 1))
+    clickOnCoordinate(randomRow, randomCol, player1Gameboard, 'gameboard1')
+}
+
