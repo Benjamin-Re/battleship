@@ -1,12 +1,8 @@
 import Ship from '../logicalComponents/ship.js'
 import { player1Gameboard, player2Gameboard } from '../main.js'
 import { computerTurn } from './enterCoordinatesComponent.js'
+import { gamestate } from './state.js' 
 
-export const gamestate = { 
-    gameover: false,
-    turn: true,
-    isComputerGame: false
- }
 
 export function createVisualGameboard(name) {
     const gameboard = document.createElement('div')
@@ -42,31 +38,40 @@ function createCoordinate (gameboard, row, col) {
 function onClick(e) {   
     const coordinates = e.target.id.substr(11).split('').map(Number)
     console.log(coordinates)
-    if(e.target.parentNode.id==='gameboard1'){
-        clickOnCoordinate(coordinates[0],coordinates[1],player1Gameboard, 'gameboard1')
+    // Determine which player's turn it is based on gamestate.turn
+    const currentGameboardToAttack = gamestate.turn ? player2Gameboard : player1Gameboard;
+    const currentGameboardToAttackId = gamestate.turn ? 'gameboard2' : 'gameboard1';
+    // Check if the clicked coordinate belongs to the current player's gameboard
+    const clickedGameboardId = e.target.closest('.gameboard').id;
+    if (clickedGameboardId === currentGameboardToAttackId) {
+        // It's the current player's turn and they clicked on their own gameboard
+        clickOnCoordinate(coordinates[0], coordinates[1], currentGameboardToAttack, currentGameboardToAttackId);
     }
-    if(e.target.parentNode.id==='gameboard2'){
-        clickOnCoordinate(coordinates[0],coordinates[1],player2Gameboard, 'gameboard2')
-    }
-    console.log(gamestate.isComputerGame)
-    if(gamestate.isComputerGame){
+    if(gamestate.isComputerGame && !gamestate.turn){
         computerTurn()
     }
 }
 
 export function clickOnCoordinate(row, col, gameboard, gameboardId) {
+    let successfulHit = false
     console.log(`selector #${gameboardId} #coordinate-${row}${col}`)
     if(gameboard.getMap()[row][col] instanceof Ship){
         document.querySelector(`#${gameboardId} #coordinate-${row}${col}`).style.backgroundColor = 'blue'
     } else {
         document.querySelector(`#${gameboardId} #coordinate-${row}${col}`).style.backgroundColor = 'red'
     }
-    gameboard.receiveAttack(row,col)
+    if(gameboard.receiveAttack(row,col)){
+        successfulHit = true
+        // Dont change turns, after a successful hit the player gets another round
+    } else {
+        gamestate.turn = !(gamestate.turn)
+        successfulHit = false
+    }
     if(gameboard.areAllShipsSunk()) {
         alert(`All ships of ${gameboardId} are sunk`)
         gamestate.gameover = true
     }
-    gamestate.turn = !gamestate.turn
+    return successfulHit
 }
 
 export function repaintGameboards() {

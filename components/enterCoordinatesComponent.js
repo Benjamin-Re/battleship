@@ -1,7 +1,7 @@
 import { player1Gameboard, player2Gameboard } from "../main.js"
 import { repaintGameboards } from "./gameboardComponent.js"
-import { gamestate } from './gameboardComponent.js'
 import {clickOnCoordinate } from './gameboardComponent.js'
+import { gamestate } from './state.js'
 
 export function createCoordinateForm() {
     const app = document.querySelector('.app')
@@ -93,10 +93,15 @@ function submitCoordinates() {
 }
 
 export function computerTurn() {
-    if(!gamestate.gameover && !gamestate.turn){
-        const randomRow = Math.floor(Math.random() * (4 + 1))
-        const randomCol = Math.floor(Math.random() * (4 + 1))
-        clickOnCoordinate(randomRow, randomCol, player1Gameboard, 'gameboard1')
+    if(!gamestate.gameover){
+        let successfulHit = false
+        do {
+            const randomRow = Math.floor(Math.random() * (4 + 1))
+            const randomCol = Math.floor(Math.random() * (4 + 1))
+            console.log(`Computer attacks: ${randomRow}, ${randomCol}`);
+            successfulHit = clickOnCoordinate(randomRow, randomCol, player1Gameboard, 'gameboard1');
+            console.log(`Successful hit: ${successfulHit}`);
+        } while (successfulHit)
     }
 }
 
