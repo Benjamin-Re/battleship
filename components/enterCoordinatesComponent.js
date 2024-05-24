@@ -42,7 +42,7 @@ export function createCoordinateForm() {
 }
 
 function randomlyDistributeShips() {
-    repaintGameboards()
+    resetGame()
     let numShipsPlayer1 = 0
     while(numShipsPlayer1 < 3) {
         const randomStartRow = Math.floor(Math.random() * (4 + 1))
@@ -65,6 +65,15 @@ function randomlyDistributeShips() {
     }
 }
 
+function resetGame() {
+    repaintGameboards()
+    gamestate.gameover = false
+    gamestate.isComputerGame = false
+    gamestate.turn = true
+    console.clear()
+    console.log(`Gamestate.gameover: ${gamestate.gameover}, gamestate.turn: ${gamestate.turn}, gamestate.isComputerGame:${gamestate.isComputerGame}`)
+}
+
 function submitCoordinates() {
     const coordinates = document.getElementById('coordinateInput').value.split(',').map(Number)
     console.log(coordinates)
@@ -75,18 +84,10 @@ function submitCoordinates() {
     const endX = coordinates[2]
     const endY = coordinates[3]
     if(dropdownValue === 'player1') {
-        if(player1Gameboard.isSpaceAvailable(startX, startY, endX, endY)){
-            player1Gameboard.placeShip(startX, startY, endX, endY)
-        } else {
-            alert('space not available')
-        }
+        player1Gameboard.placeShip(startX, startY, endX, endY)
     }
     if(dropdownValue === 'player2') {
-        if(player2Gameboard.isSpaceAvailable(startX, startY, endX, endY)){
-            player2Gameboard.placeShip(startX, startY, endX, endY)
-        } else {
-            alert('space not available')
-        }
+        player2Gameboard.placeShip(startX, startY, endX, endY)
     }
     repaintGameboards()
 }
@@ -99,11 +100,7 @@ export function computerTurn() {
     }
 }
 
-function startComputerGame() {  
-    console.log(`Gamestate gameover: ${gamestate.gameover}, gamestate turn: ${gamestate.turn}`)  
-    
-    computerTurn()
-    
-    
+function startComputerGame() {    
+    gamestate.isComputerGame = true
 }
 

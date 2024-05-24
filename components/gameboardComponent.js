@@ -4,7 +4,8 @@ import { computerTurn } from './enterCoordinatesComponent.js'
 
 export const gamestate = { 
     gameover: false,
-    turn: true
+    turn: true,
+    isComputerGame: false
  }
 
 export function createVisualGameboard(name) {
@@ -48,7 +49,10 @@ function onClick(e) {
     if(e.target.parentNode.id==='gameboard2'){
         clickOnCoordinate(coordinates[0],coordinates[1],player2Gameboard, 'gameboard2')
     }
-    computerTurn()
+    console.log(gamestate.isComputerGame)
+    if(gamestate.isComputerGame){
+        computerTurn()
+    }
 }
 
 export function clickOnCoordinate(row, col, gameboard, gameboardId) {
