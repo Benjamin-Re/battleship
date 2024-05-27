@@ -70,8 +70,12 @@ function resetGame() {
     gamestate.gameover = false
     gamestate.isComputerGame = false
     gamestate.turn = true
+    gamestate.attackLog = new Set()
     console.clear()
-    console.log(`Gamestate.gameover: ${gamestate.gameover}, gamestate.turn: ${gamestate.turn}, gamestate.isComputerGame:${gamestate.isComputerGame}`)
+    console.log(`Gamestate.gameover: ${gamestate.gameover}, \
+        gamestate.turn: ${gamestate.turn}, \
+        gamestate.isComputerGame:${gamestate.isComputerGame}, \
+        gamestate.attackLog: ${gamestate.attackLog}`)
 }
 
 function submitCoordinates() {
@@ -96,8 +100,15 @@ export function computerTurn() {
     if(!gamestate.gameover){
         let successfulHit = false
         do {
-            const randomRow = Math.floor(Math.random() * (4 + 1))
-            const randomCol = Math.floor(Math.random() * (4 + 1))
+            let randomRow = Math.floor(Math.random() * (4 + 1))
+            let randomCol = Math.floor(Math.random() * (4 + 1))
+            let coordinate = `${randomRow}${randomCol}`
+            while(gamestate.attackLog.has(coordinate)){
+                randomRow = Math.floor(Math.random() * (4 + 1))
+                randomCol = Math.floor(Math.random() * (4 + 1))
+                coordinate = `${randomRow}${randomCol}`
+            }
+            gamestate.attackLog.add(coordinate)
             console.log(`Computer attacks: ${randomRow}, ${randomCol}`);
             successfulHit = clickOnCoordinate(randomRow, randomCol, player1Gameboard, 'gameboard1');
             console.log(`Successful hit: ${successfulHit}`);
