@@ -1,6 +1,4 @@
 TODO
-- disable attacks on the gameboard of player2 when its player2's turn
-- after a successful hit on an enemy ship the player gets a second turn
 - instead of hardcoding the grid to 5x5 make it scalable
 - add some css the form
 - add a visual indication on whos turn it is
