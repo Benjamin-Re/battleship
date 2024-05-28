@@ -3,11 +3,14 @@ import { player1Gameboard, player2Gameboard } from '../main.js'
 import { computerTurn } from './enterCoordinatesComponent.js'
 import { gamestate } from './state.js' 
 
-
 export function createVisualGameboard(name) {
     const gameboard = document.createElement('div')
     gameboard.setAttribute('class','gameboard')
     gameboard.setAttribute('id',`${name}`)
+    const gameboardLabel = document.createElement('div')
+    gameboardLabel.textContent = name
+    gameboardLabel.setAttribute('class','gameboardLabel')
+    gameboard.append(gameboardLabel)
     return gameboard
 }
 
@@ -71,11 +74,16 @@ export function clickOnCoordinate(row, col, gameboard, gameboardId) {
         // Dont change turns, after a successful hit the player gets another round
     } else {
         gamestate.turn = !(gamestate.turn)
+        const stateLabel = document.getElementsByClassName('stateLabel')[0]
+        stateLabel.textContent = gamestate.turn ? 'Player 1' : 'Player 2'
         successfulHit = false
     }
     if(gameboard.areAllShipsSunk()) {
         alert(`All ships of ${gameboardId} are sunk`)
+        const winner = gameboardId === 'gameboard1' ? 'Player 2' : 'Player 1'
         gamestate.gameover = true
+        const stateLabel = document.getElementsByClassName('stateLabel')[0];
+        stateLabel.textContent = `Gameover. The winner is ${winner}`
     }
     return successfulHit
 }
