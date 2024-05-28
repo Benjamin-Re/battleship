@@ -11,6 +11,16 @@ export const gameboard = () => {
         [0,0,0,0,0],
     ] 
 
+    const resetGameboard = () => {
+        map = [
+            [0,0,0,0,0],
+            [0,0,0,0,0],
+            [0,0,0,0,0],
+            [0,0,0,0,0],
+            [0,0,0,0,0],
+        ] 
+    }
+
     // place ships on specific coordinates, eg (01,03), so a ship with length of three vertically in the top left
     const placeShip = (startRow, startCol, endRow, endCol) => {
         console.log(`About to place a ship at coordinates (${startRow}, ${startCol}/${endRow}, ${endCol})`)
@@ -115,6 +125,7 @@ export const gameboard = () => {
         getMap,
         receiveAttack,
         areAllShipsSunk,
-        areCoordinatesValid
+        areCoordinatesValid,
+        resetGameboard
     }
 }

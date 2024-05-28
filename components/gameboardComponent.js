@@ -15,17 +15,23 @@ export function addVisualCoordinatesToGameboard(playerGameboard, visualGameboard
     for(let row = 0; row < playerGameboard.getMap().length; row++) {
         for(let col = 0; col < playerGameboard.getMap()[row].length; col++) {
             if(playerGameboard.getMap()[row][col] instanceof Ship) {
-                createCoordinate(visualGameboard, row, col)
+                createCoordinate(visualGameboard, row, col, true)
             } else {
-                createCoordinate(visualGameboard, row, col)
+                createCoordinate(visualGameboard, row, col, false)
             }
         }
     }
 }
 
-function createCoordinate (gameboard, row, col) {
+function createCoordinate (gameboard, row, col, isShip) {
     const coordinate = document.createElement('div')
-    let coordinateColor = (gameboard == gameboard1) ? 'gray' : 'lightgray'
+    let coordinateColor = (gameboard == gameboard1) ? 'pink' : 'coral'
+    if(gamestate.showShips){
+        if(isShip){
+            console.log('is a ship')
+            coordinateColor = 'green'
+        }
+    }
     coordinate.style.backgroundColor = coordinateColor
     coordinate.setAttribute('class', 'coordinate')
     coordinate.addEventListener('click', onClick)

@@ -44,29 +44,47 @@ export function createCoordinateForm() {
 function randomlyDistributeShips() {
     resetGame()
     let numShipsPlayer1 = 0
-    while(numShipsPlayer1 < 3) {
-        const randomStartRow = Math.floor(Math.random() * (4 + 1))
-        const randomStartCol = Math.floor(Math.random() * (4 + 1))
-        const randomEndRow = Math.floor(Math.random() * (4 + 1))
-        const randomEndCol = Math.floor(Math.random() * (4 + 1))       
+    while(numShipsPlayer1 < 3) {       
+        const { randomStartRow, randomStartCol, randomEndRow, randomEndCol } = generateRandomCoordinates(numShipsPlayer1 + 2)
         if(player1Gameboard.placeShip(randomStartRow,randomStartCol,randomEndRow,randomEndCol)){
             numShipsPlayer1++
         }
     }
     let numShipsPlayer2 = 0
     while(numShipsPlayer2 < 3) {
-        const randomStartRow = Math.floor(Math.random() * (4 + 1))
-        const randomStartCol = Math.floor(Math.random() * (4 + 1))
-        const randomEndRow = Math.floor(Math.random() * (4 + 1))
-        const randomEndCol = Math.floor(Math.random() * (4 + 1))       
+        const { randomStartRow, randomStartCol, randomEndRow, randomEndCol } = generateRandomCoordinates(numShipsPlayer2 + 2)      
         if(player2Gameboard.placeShip(randomStartRow,randomStartCol,randomEndRow,randomEndCol)){
             numShipsPlayer2++
         }
     }
+    repaintGameboards()
+}
+
+function generateRandomCoordinates(shipSize) {
+    let randomStartRow, randomStartCol, randomEndRow, randomEndCol;
+
+    while (true) {
+        randomStartRow = Math.floor(Math.random() * 5);
+        randomStartCol = Math.floor(Math.random() * 5);
+        randomEndRow = Math.floor(Math.random() * 5);
+        randomEndCol = Math.floor(Math.random() * 5);
+
+        const rowDifference = Math.abs(randomStartRow - randomEndRow);
+        const colDifference = Math.abs(randomStartCol - randomEndCol);
+
+        // Ensure the coordinates are shipSize - 1 apart either horizontally or vertically
+        if ((rowDifference === shipSize - 1 && colDifference === 0) || 
+            (colDifference === shipSize - 1 && rowDifference === 0)) {
+            break;
+        }
+    }
+
+    return { randomStartRow, randomStartCol, randomEndRow, randomEndCol };
 }
 
 function resetGame() {
-    repaintGameboards()
+    player1Gameboard.resetGameboard()
+    player2Gameboard.resetGameboard()
     gamestate.gameover = false
     gamestate.isComputerGame = false
     gamestate.turn = true
