@@ -1,25 +1,25 @@
 import Ship from './ship.js'
 
-export const gameboard = () => {
+export const gameboard = (m,n) => {
     
     // Empty map to start with
-    let map = [
-        [0,0,0,0,0],
-        [0,0,0,0,0],
-        [0,0,0,0,0],
-        [0,0,0,0,0],
-        [0,0,0,0,0],
-    ] 
-
-    const resetGameboard = () => {
-        map = [
-            [0,0,0,0,0],
-            [0,0,0,0,0],
-            [0,0,0,0,0],
-            [0,0,0,0,0],
-            [0,0,0,0,0],
-        ] 
+    let map = [];
+    
+    for (let i = 0; i < m; i++) {
+        let row = [];
+        for (let j = 0; j < n; j++) {
+            row.push(0);
+        }
+        map.push(row);
     }
+
+    const resetGameboard = (map, m, n) => {   
+        for (let i = 0; i < m; i++) {
+            for (let j = 0; j < n; j++) {
+                map[i][j] = 0;
+            }
+        }
+    };
 
     // place ships on specific coordinates, eg (01,03), so a ship with length of three vertically in the top left
     const placeShip = (startRow, startCol, endRow, endCol) => {
@@ -72,7 +72,7 @@ export const gameboard = () => {
 
         const areCoordinatesValid = (startRow, startCol, endRow, endCol) => {
             // Coordinates can't be outside the grid
-            if(startRow < 0 || startRow > 4 || startCol < 0 || startCol > 4 || endRow < 0 || endRow > 4 || endCol < 0 || endCol > 4 ){
+            if(startRow < 0 || startRow > m || startCol < 0 || startCol > n || endRow < 0 || endRow > m || endCol < 0 || endCol > n ){
                 return false
             } 
             // Coordinates must form a either horizontal or vertical line

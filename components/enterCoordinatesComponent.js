@@ -62,12 +62,13 @@ function randomlyDistributeShips() {
 
 function generateRandomCoordinates(shipSize) {
     let randomStartRow, randomStartCol, randomEndRow, randomEndCol;
-
+    const numRows = player1Gameboard.getMap().length
+    const numCols = player1Gameboard.getMap()[0].length
     while (true) {
-        randomStartRow = Math.floor(Math.random() * 5);
-        randomStartCol = Math.floor(Math.random() * 5);
-        randomEndRow = Math.floor(Math.random() * 5);
-        randomEndCol = Math.floor(Math.random() * 5);
+        randomStartRow = Math.floor(Math.random() * numRows);
+        randomStartCol = Math.floor(Math.random() * numCols);
+        randomEndRow = Math.floor(Math.random() * numRows);
+        randomEndCol = Math.floor(Math.random() * numCols);
 
         const rowDifference = Math.abs(randomStartRow - randomEndRow);
         const colDifference = Math.abs(randomStartCol - randomEndCol);
@@ -117,13 +118,16 @@ function submitCoordinates() {
 export function computerTurn() {
     if(!gamestate.gameover){
         let successfulHit = false
+        const numRows = player1Gameboard.getMap().length
+        const numCols = player1Gameboard.getMap()[0].length
+
         do {
-            let randomRow = Math.floor(Math.random() * (4 + 1))
-            let randomCol = Math.floor(Math.random() * (4 + 1))
+            let randomRow = Math.floor(Math.random() * numRows)
+            let randomCol = Math.floor(Math.random() * numCols)
             let coordinate = `${randomRow}${randomCol}`
             while(gamestate.attackLog.has(coordinate)){
-                randomRow = Math.floor(Math.random() * (4 + 1))
-                randomCol = Math.floor(Math.random() * (4 + 1))
+                randomRow = Math.floor(Math.random() * numRows)
+                randomCol = Math.floor(Math.random() * numCols)
                 coordinate = `${randomRow}${randomCol}`
             }
             gamestate.attackLog.add(coordinate)
