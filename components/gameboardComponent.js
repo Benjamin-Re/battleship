@@ -7,10 +7,6 @@ export function createVisualGameboard(name) {
     const gameboard = document.createElement('div')
     gameboard.setAttribute('class','gameboard')
     gameboard.setAttribute('id',`${name}`)
-    const gameboardLabel = document.createElement('div')
-    gameboardLabel.textContent = name
-    gameboardLabel.setAttribute('class','gameboardLabel')
-    gameboard.append(gameboardLabel)
     return gameboard
 }
 

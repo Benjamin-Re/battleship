@@ -12,6 +12,16 @@ export const player2Gameboard = player2.gameboard
 
 createCoordinateForm()
 
+const header = document.createElement('div')
+header.setAttribute('class', 'header')
+const headerPlayer1 = document.createElement('div')
+headerPlayer1.textContent = 'Player 1 Gameboard'
+const headerPlayer2 = document.createElement('div')
+headerPlayer2.textContent = 'Player 1 Gameboard'
+header.append(headerPlayer1)
+header.append(headerPlayer2)
+app.append(header)
+
 const gameboardContainer = document.createElement('div')
 gameboardContainer.classList.add('gameboardContainer')
 const gameboard1 = createVisualGameboard('gameboard1')
