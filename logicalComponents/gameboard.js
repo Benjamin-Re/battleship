@@ -2,23 +2,25 @@ import Ship from './ship.js'
 
 export const gameboard = (m,n) => {
     
-    // Empty map to start with
-    let map = [];
-    
-    for (let i = 0; i < m; i++) {
-        let row = [];
-        for (let j = 0; j < n; j++) {
-            row.push(0);
-        }
-        map.push(row);
-    }
-
-    const resetGameboard = (map, m, n) => {   
+    // Function to create an empty gameboard
+    const createEmptyMap = (m, n) => {
+        let map = [];
         for (let i = 0; i < m; i++) {
+            let row = [];
             for (let j = 0; j < n; j++) {
-                map[i][j] = 0;
+                row.push(0);
             }
+            map.push(row);
         }
+        return map;
+    };
+
+    // Initialize the board
+    let map = createEmptyMap(m, n);
+
+    // Reset the gameboard
+    const resetGameboard = () => {
+        map = createEmptyMap(m, n);
     };
 
     // place ships on specific coordinates, eg (01,03), so a ship with length of three vertically in the top left
