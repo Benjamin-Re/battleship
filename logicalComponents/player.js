@@ -5,6 +5,6 @@ export const player = (name, type) => {
     return {
         type: type,
         name: name,
-        gameboard: gameboard(5,5)
+        gameboard: gameboard(10,10)
     }
 }

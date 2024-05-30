@@ -27,8 +27,8 @@ body,html {
 }
 
 .coordinate {
-    width: calc(20% - 10px);
-    height: calc(20% - 10px);
+    width: calc(10% - 10px);
+    height: calc(10% - 10px);
 }
 
 .formContainer {
