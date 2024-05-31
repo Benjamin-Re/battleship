@@ -3,5 +3,5 @@ export const gamestate = {
     turn: true,
     isComputerGame: false,
     attackLog: new Set(),
-    showShips: true
+    showShips: false
  }

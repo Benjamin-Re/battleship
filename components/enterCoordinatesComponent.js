@@ -38,8 +38,33 @@ export function createCoordinateForm() {
     startComputerGameButton.textContent = 'Start Computer Game'
     startComputerGameButton.addEventListener('click', startComputerGame)
     formContainer.append(startComputerGameButton)
+    const checkboxContainer = document.createElement('div')
+    checkboxContainer.setAttribute('class', 'checkboxContainer')
+    const showShipsCheckbox = document.createElement('input')
+    showShipsCheckbox.type = 'checkbox'
+    showShipsCheckbox.id = 'showShipsCheckbox'
+    showShipsCheckbox.name = 'showShipsCheckbox'
+    showShipsCheckbox.value = 'showShips'
+    showShipsCheckbox.addEventListener('click', toggleShowShips)
+    checkboxContainer.append(showShipsCheckbox)
+    const checkboxLabel = document.createElement('label');
+    checkboxLabel.htmlFor = 'showShipsCheckbox'
+    checkboxLabel.innerHTML = 'Show Ships'
+    checkboxContainer.append(checkboxLabel)
+    formContainer.append(checkboxContainer)
     app.append(formContainer)
 }
+
+function toggleShowShips () {
+    const checkbox = document.getElementById('showShipsCheckbox');
+    if (checkbox.checked) {
+        gamestate.showShips = true
+    } else {
+        gamestate.showShips = false  
+    }
+    repaintGameboards()
+}
+
 
 function randomlyDistributeShips() {
     resetGame()

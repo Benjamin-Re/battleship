@@ -50,3 +50,8 @@ body,html {
     display: flex;
     justify-content: space-around;
 }
+
+.checkboxContainer {
+    display: flex;
+    justify-content: center;
+}
